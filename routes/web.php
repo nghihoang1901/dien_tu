@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EnsureAdminRole;
+use App\Http\Middleware\RuleSaveProduct;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,6 +62,9 @@ Route::get('/tin-tuc',"App\Http\Controllers\NomalPageController@tin_tuc");
 Route::get('/lien-he', "App\Http\Controllers\NomalPageController@lien_he");
 Route::post('/lien-he',"App\Http\Controllers\NomalPageController@lien_he_store");
 
+Route::get('/view-don-hang/{email}', "App\Http\Controllers\NomalPageController@view_don_hang");
+Route::get('/don-hang/{email}', "App\Http\Controllers\NomalPageController@api_don_hang");
+
 
 // route admin
 Route::get('/admins', "App\Http\Controllers\AdminController@index")->middleware(EnsureAdminRole::class);
@@ -75,7 +79,8 @@ Route::get('/admin/ql-san-pham/create', 'App\Http\Controllers\ProductAdminContro
 Route::post('/admin/ql-san-pham/create', 'App\Http\Controllers\ProductAdminController@store')->middleware(EnsureAdminRole::class);
 
 Route::get('/admin/ql-san-pham/edit/{id}','App\Http\Controllers\ProductAdminController@edit')->middleware(EnsureAdminRole::class);
-Route::post('/admin/ql-san-pham/edit/{id}','App\Http\Controllers\ProductAdminController@update')->middleware(EnsureAdminRole::class);
-
+Route::post('/admin/ql-san-pham/edit/{id}','App\Http\Controllers\ProductAdminController@update')->middleware(EnsureAdminRole::class, RuleSaveProduct::class);
+Route::get('/admin/ql-don-hang', 'App\Http\Controllers\DonHangAdminController@index')->middleware(EnsureAdminRole::class);
+Route::get('/admin/ql-don-hang/pagination/{current_page}', 'App\Http\Controllers\DonHangAdminController@pagination');
 // generate data website url
 Route::get('/generate-data/{table}',"App\Http\Controllers\GenerateDataController@index")->middleware(EnsureAdminRole::class);

@@ -19,6 +19,16 @@
                     <li><a class="" href="/admin/ql-san-pham">Danh sách sản phẩm</a></li>                          
                     <li><a class="" href="/admin/ql-san-pham/create">Thêm sản phẩm mới</a></li>
                 </ul>
+            </li>    
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i class="icon_document_alt"></i>
+                    <span>Quản lý đơn hàng</span>
+                    <span class="menu-arrow arrow_carrot-right"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" href="/admin/ql-don-hang">Danh sách đơn hàng</a></li>                          
+                </ul>
             </li>      
             <li class="sub-menu">
                 <a href="javascript:;" class="">

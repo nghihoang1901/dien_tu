@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="/css/linh_kien.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/don_hang.css">
     <script src="//code.jquery.com/jquery.js"></script>
     <link rel="stylesheet" href="/css/cart.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">

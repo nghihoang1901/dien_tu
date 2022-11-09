@@ -19,11 +19,24 @@ class ProductAdminController extends Controller
     {
         // echo 123;
         $ds_san_pham = DB::table('bs_linh_kien')
-            ->select(DB::raw('bs_linh_kien.*, ten_loai_linh_kien, ten_hang_san_xuat'))
-            ->join('bs_loai_linh_kien', 'bs_linh_kien.id_loai_linh_kien', '=', 'bs_loai_linh_kien.id')
-            ->join('bs_hang_san_xuat', 'bs_linh_kien.id_hang_san_xuat', '=', 'bs_hang_san_xuat.id')
-            ->get();
-            // echo "<pre>",print_r($ds_linh_kien),"</pre>";
+            ->select(
+                DB::raw('bs_linh_kien.*, ten_loai_linh_kien, ten_hang_san_xuat')
+            )
+            ->join(
+                'bs_loai_linh_kien',
+                'bs_linh_kien.id_loai_linh_kien',
+                '=',
+                'bs_loai_linh_kien.id'
+            )
+            ->join(
+                'bs_hang_san_xuat',
+                'bs_linh_kien.id_hang_san_xuat',
+                '=',
+                'bs_hang_san_xuat.id'
+            )
+            ->get(
+            );
+        // echo "<pre>",print_r($ds_linh_kien),"</pre>";
         return view('page_admin.trang_ds_san_pham')->with('ds_san_pham', $ds_san_pham);
     }
 
@@ -37,8 +50,14 @@ class ProductAdminController extends Controller
         $ds_loai_san_pham = DB::table('bs_loai_linh_kien')->get();
         $ds_hang_san_xuat = DB::table('bs_hang_san_xuat')->get();
         return view('page_admin.trang_them_san_pham')
-            ->with('ds_loai_san_pham', $ds_loai_san_pham)
-            ->with('ds_hang_san_xuat', $ds_hang_san_xuat);
+            ->with(
+                'ds_loai_san_pham',
+                $ds_loai_san_pham
+            )
+            ->with(
+                'ds_hang_san_xuat',
+                $ds_hang_san_xuat
+            );
 
     }
 
@@ -64,38 +83,37 @@ class ProductAdminController extends Controller
         $noi_bat = $request->get('noi_bat');
         $hinh_san_pham = $request->file('hinh_san_pham');
         // echo "<pre>",print_r($hinh_san_pham),"</pre>";
-        if($don_gia > $gia_bia){
-            return redirect('/admin/ql-san-pham/create')->with('NoticeSuccess', 'Thông tin sách có vấn đề: đơn giá không được lớn hơn hơn giá bìa');
-        }
-        else{
-            $cur_time = time();
 
-            $name_file = $hinh_san_pham->getClientOriginalName();
-            $arr_name_file = explode('.', $name_file);
-    
-            $public_path = public_path();
-            $hinh = $arr_name_file[0] . '_' . $cur_time . '.' . $arr_name_file[count($arr_name_file) - 1];
-            if($hinh_san_pham->isValid()){
-                $hinh_san_pham->move($public_path . '/images/san_pham', $hinh);
-            }
+        $cur_time = time();
+
+        $name_file = $hinh_san_pham->getClientOriginalName();
+        $arr_name_file = explode('.', $name_file);
+
+        $public_path = public_path();
+        $hinh = $arr_name_file[0] . '_' . $cur_time . '.' . $arr_name_file[count($arr_name_file) - 1];
+        if ($hinh_san_pham->isValid()) {
+            $hinh_san_pham->move($public_path . '/images/san_pham', $hinh);
         }
+
 
         $id_san_pham_moi = DB::table('bs_linh_kien')
-            ->insertGetId([
-                'so_seri_linh_kien' => $so_seri_linh_kien,
-                'ten_linh_kien' => $ten_linh_kien,
-                'id_hang_san_xuat' => $id_hang_san_xuat,
-                'id_loai_linh_kien' => $id_loai_linh_kien,
-                'nam_san_xuat' => $nam_san_xuat,
-                'thong_tin_bao_hanh' => $thong_tin_bao_hanh,
-                'thong_so_ky_thuat' => $thong_so_ky_thuat,
-                'danh_gia_chi_tiet' => $danh_gia_chi_tiet,
-                'trang_thai' => $trang_thai,
-                'don_gia' => $don_gia,
-                'gia_bia' => $gia_bia,
-                'noi_bat' => $noi_bat,
-                'hinh' => $hinh
-            ]);
+            ->insertGetId(
+                [
+                    'so_seri_linh_kien' => $so_seri_linh_kien,
+                    'ten_linh_kien' => $ten_linh_kien,
+                    'id_hang_san_xuat' => $id_hang_san_xuat,
+                    'id_loai_linh_kien' => $id_loai_linh_kien,
+                    'nam_san_xuat' => $nam_san_xuat,
+                    'thong_tin_bao_hanh' => $thong_tin_bao_hanh,
+                    'thong_so_ky_thuat' => $thong_so_ky_thuat,
+                    'danh_gia_chi_tiet' => $danh_gia_chi_tiet,
+                    'trang_thai' => $trang_thai,
+                    'don_gia' => $don_gia,
+                    'gia_bia' => $gia_bia,
+                    'noi_bat' => $noi_bat,
+                    'hinh' => $hinh
+                ]
+            );
         return redirect('/admin/ql-san-pham/create')->with('NoticeSuccess', 'Thêm sản phẩm mới thành công');
     }
 
@@ -124,9 +142,18 @@ class ProductAdminController extends Controller
         $thong_tin_sp = DB::table('bs_linh_kien')->where('id', $id)->first();
 
         return view('page_admin.trang_them_san_pham')
-            ->with('ds_loai_san_pham', $ds_loai_san_pham)
-            ->with('ds_hang_san_xuat', $ds_hang_san_xuat)
-            ->with('thong_tin_sp', $thong_tin_sp);
+            ->with(
+                'ds_loai_san_pham',
+                $ds_loai_san_pham
+            )
+            ->with(
+                'ds_hang_san_xuat',
+                $ds_hang_san_xuat
+            )
+            ->with(
+                'thong_tin_sp',
+                $thong_tin_sp
+            );
 
     }
 
@@ -152,40 +179,42 @@ class ProductAdminController extends Controller
         $trang_thai = $request->get('trang_thai');
         $noi_bat = $request->get('noi_bat');
         $hinh = $request->get('hinh');
-        
-        if($request->hasFile('hinh_san_pham')){
+
+        if ($request->hasFile('hinh_san_pham')) {
             $hinh_san_pham = $request->file('hinh_san_pham');
             $cur_time = time();
 
             $name_file = $hinh_san_pham->getClientOriginalName();
             $arr_name_file = explode('.', $name_file);
-    
+
             $public_path = public_path();
             $hinh = $arr_name_file[0] . '_' . $cur_time . '.' . $arr_name_file[count($arr_name_file) - 1];
-            if($hinh_san_pham->isValid()){
+            if ($hinh_san_pham->isValid()) {
                 $hinh_san_pham->move($public_path . '/images/san_pham', $hinh);
             }
         }
 
         $result = DB::table('bs_linh_kien')
-            ->where('id', $id)
-            ->update([
-                'so_seri_linh_kien' => $so_seri_linh_kien,
-                'ten_linh_kien' => $ten_linh_kien,
-                'id_hang_san_xuat' => $id_hang_san_xuat,
-                'id_loai_linh_kien' => $id_loai_linh_kien,
-                'nam_san_xuat' => $nam_san_xuat,
-                'thong_tin_bao_hanh' => $thong_tin_bao_hanh,
-                'thong_so_ky_thuat' => $thong_so_ky_thuat,
-                'danh_gia_chi_tiet' => $danh_gia_chi_tiet,
-                'trang_thai' => $trang_thai,
-                'don_gia' => $don_gia,
-                'gia_bia' => $gia_bia,
-                'noi_bat' => $noi_bat,
-                'hinh' => $hinh
-                
-            ]);
-        return redirect('/admin/ql-san-pham/edit/' .$id)->with('NoticeSuccess', 'Cập nhật sản phẩm thành công');
+            ->where('id',$id)
+            ->update(
+                [
+                    'so_seri_linh_kien' => $so_seri_linh_kien,
+                    'ten_linh_kien' => $ten_linh_kien,
+                    'id_hang_san_xuat' => $id_hang_san_xuat,
+                    'id_loai_linh_kien' => $id_loai_linh_kien,
+                    'nam_san_xuat' => $nam_san_xuat,
+                    'thong_tin_bao_hanh' => $thong_tin_bao_hanh,
+                    'thong_so_ky_thuat' => $thong_so_ky_thuat,
+                    'danh_gia_chi_tiet' => $danh_gia_chi_tiet,
+                    'trang_thai' => $trang_thai,
+                    'don_gia' => $don_gia,
+                    'gia_bia' => $gia_bia,
+                    'noi_bat' => $noi_bat,
+                    'hinh' => $hinh
+
+                ]
+            );
+        return redirect('/admin/ql-san-pham/edit/' . $id)->with('NoticeSuccess', 'Cập nhật sản phẩm thành công');
     }
 
     /**
@@ -196,13 +225,12 @@ class ProductAdminController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        try {
             DB::table('bs_linh_kien')->where('id', $id)->delete();
-            return redirect($_SERVER['HTTP_REFERER'])->withErrors('Đã xóa thành công sản phẩm có ID là '. $id, 'noticeDelete');
+            return redirect($_SERVER['HTTP_REFERER'])->withErrors('Đã xóa thành công sản phẩm có ID là ' . $id, 'noticeDelete');
+        } catch (Exception $e) {
+            return redirect($_SERVER['HTTP_REFERER'])->withErrors('Xóa sản phẩm bị lỗi' . $e, 'noticeDelete');
         }
-        catch(Exception $e){
-            return redirect($_SERVER['HTTP_REFERER'])->withErrors('Xóa sản phẩm bị lỗi'. $e, 'noticeDelete');
-        }
-        
+
     }
 }

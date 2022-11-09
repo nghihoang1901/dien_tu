@@ -98,6 +98,7 @@ table tr th { color: #688a7e;}
     color: #000;
     vertical-align: top;
       font-weight: 600;
+      margin: -10px 0 15px 0 ;
   }
   ul.support-right li a:hover {
     color: #ff5d56;

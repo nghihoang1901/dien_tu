@@ -1,0 +1,30 @@
+.title_don_hang{
+    font-weight: bold;
+    font-size: 16px;
+}
+.info_don_hang{
+    margin: 32px 0;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 32px;
+}
+.item_san_pham_don_hang{
+    display: flex;
+    margin: 24px 0;
+    border-radius: 4px;
+    box-shadow: 5px 5px 5px #ccc;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: ease all 0.3s;
+}
+.item_san_pham_don_hang:hover{
+    transform: scale(1.05) translate(0, -2px);
+}
+.item_san_pham_don_hang > div{
+    margin: auto;
+}
+.image_item{
+    width: 60px;
+}
+.load_more_hidden{
+    height: 10px;
+}

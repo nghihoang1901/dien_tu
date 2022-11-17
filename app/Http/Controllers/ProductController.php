@@ -72,8 +72,8 @@ class ProductController extends Controller
         // echo $id_san_pham;
         $thong_tin_san_pham = DB::table('bs_linh_kien')
             ->select(DB::raw('bs_linh_kien.*, ten_loai_linh_kien, ten_hang_san_xuat'))
-            ->join('bs_hang_san_xuat', 'bs_linh_kien.id_hang_san_xuat', 'bs_hang_san_xuat.id')
-            ->join('bs_loai_linh_kien', 'bs_linh_kien.id_loai_linh_kien', 'bs_loai_linh_kien.id')
+            ->join('bs_hang_san_xuat', 'bs_linh_kien.id_hang_san_xuat', '=', 'bs_hang_san_xuat.id')
+            ->join('bs_loai_linh_kien', 'bs_linh_kien.id_loai_linh_kien', '=', 'bs_loai_linh_kien.id')
             ->where('bs_linh_kien.id', $id_san_pham)
             ->first();
 

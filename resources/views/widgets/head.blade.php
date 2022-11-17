@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/don_hang.css">
+    <link rel="stylesheet" href="/css/chat_support.css">
     <script src="//code.jquery.com/jquery.js"></script>
     <link rel="stylesheet" href="/css/cart.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -40,8 +41,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 	<link href="css/memenu.css" rel="stylesheet" type="text/css" media="all" />
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 	<script type="text/javascript" src="js/memenu.js"></script>
 	<script>$(document).ready(function () { $(".memenu").memenu(); });</script>
     <script src="js/main.js"></script>
+    <script>
+        var sessionid = "@if(session()->has('id_anonymous')){{(session('id_anonymous')[0])?session('id_anonymous')[0]:''}}@endif";
+    </script>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0" nonce="vYV0ToQY"></script>
 
 </head>

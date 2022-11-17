@@ -147,7 +147,7 @@
                                         <td>
                                             <div class="btn-group">
                                                 <a class="btn btn-primary"
-                                                    href="/admin/ql-san-pham/edit/${data.ds_don_hang[i].id}"><i
+                                                    href="/admin/ql-don-hang/edit/${data.ds_don_hang[i].id}"><i
                                                         class="icon_pencil"></i></a>
                                                 <a class="btn btn-danger" onclick="return confirm_delete();"
                                                     href="/admin/san-pham/delete/${data.ds_don_hang[i].id}"><i

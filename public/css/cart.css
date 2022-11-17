@@ -1,10 +1,10 @@
 .number_item_cart{
     position: absolute;
     background: #f00;
-    padding: 7px;
+    padding: 3px 7px;
     border-radius: 20px 20px 0 20px;
-    top: 50px;
-    left: 1090px;
+    top: 0;
+    left: 1100px;
     color: #fff;
     font-weight: bold;
     animation: button_gio_hang infinite 1s;

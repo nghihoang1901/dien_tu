@@ -1,4 +1,4 @@
-<div class="table-responsive include_table_cart" style="width: 100%">
+<div class="table-responsive include_table_cart" style="width: 100%; margin-top: 70px">
     @if (session()->has('gio_hang'))
         @if (count(session('gio_hang')) > 0)
         <form action="" method="post" name="form_gio_hang">

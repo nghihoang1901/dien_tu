@@ -65,6 +65,8 @@ Route::post('/lien-he',"App\Http\Controllers\NomalPageController@lien_he_store")
 Route::get('/view-don-hang/{email}', "App\Http\Controllers\NomalPageController@view_don_hang");
 Route::get('/don-hang/{email}', "App\Http\Controllers\NomalPageController@api_don_hang");
 
+Route::get('/notice/{email}', "App\Http\Controllers\DonHangAdminController@api_notice");
+
 
 // route admin
 Route::get('/admins', "App\Http\Controllers\AdminController@index")->middleware(EnsureAdminRole::class);
@@ -82,5 +84,15 @@ Route::get('/admin/ql-san-pham/edit/{id}','App\Http\Controllers\ProductAdminCont
 Route::post('/admin/ql-san-pham/edit/{id}','App\Http\Controllers\ProductAdminController@update')->middleware(EnsureAdminRole::class, RuleSaveProduct::class);
 Route::get('/admin/ql-don-hang', 'App\Http\Controllers\DonHangAdminController@index')->middleware(EnsureAdminRole::class);
 Route::get('/admin/ql-don-hang/pagination/{current_page}', 'App\Http\Controllers\DonHangAdminController@pagination');
+
+Route::get('/admin/ql-don-hang/edit/{id}','App\Http\Controllers\DonHangAdminController@edit')->middleware(EnsureAdminRole::class);
+Route::post('/admin/ql-don-hang/edit/{id}','App\Http\Controllers\DonHangAdminController@update')->middleware(EnsureAdminRole::class);
+
+Route::get('/admin/ql-chat-support', 'App\Http\Controllers\ChatController@index')->middleware(EnsureAdminRole::class);
+
 // generate data website url
 Route::get('/generate-data/{table}',"App\Http\Controllers\GenerateDataController@index")->middleware(EnsureAdminRole::class);
+
+Route::post('/message', "App\Http\Controllers\ChatController@save_message");
+
+Route::post('/message-turn-off', "App\Http\Controllers\ChatController@message_turn_off");

@@ -81,7 +81,16 @@ class DonHangAdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $array_trang_thai = [
+            0 => 'Đã hủy',
+            1 => 'Giao hàng thành công',
+            2 => 'Đang chờ duyệt',
+            3 => 'Đã duyệt'
+        ];
+        $thong_tin_don_hang = DB::table('bs_don_hang')->where('id', $id)->first();
+        return view('page_admin.trang_cap_nhat_don_hang')
+            ->with('array_trang_thai', $array_trang_thai)
+            ->with('thong_tin_don_hang', $thong_tin_don_hang);
     }
 
     /**
@@ -93,7 +102,32 @@ class DonHangAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $array_trang_thai = [
+            0 => 'Đã hủy',
+            1 => 'Giao hàng thành công',
+            2 => 'Đang chờ duyệt',
+            3 => 'Đã duyệt'
+        ];
+
+        $trang_thai = $request->get('trang_thai');
+        $thong_tin_don_hang_cu = DB::table('bs_don_hang')->where('id', $id)->first();
+
+        DB::table('bs_don_hang')->where('id',  $id)->update([ 'trang_thai' => $trang_thai ]);
+
+        DB::table('notice')->insert([
+            'id_don_hang' => $thong_tin_don_hang_cu->id,
+            'trang_thai_cu' => $thong_tin_don_hang_cu->trang_thai,
+            'trang_thai_moi' => $trang_thai,
+            'email' => $thong_tin_don_hang_cu->email_nguoi_nhan
+        ]);
+
+        $thong_tin_don_hang = DB::table('bs_don_hang')->where('id', $id)->first();
+
+
+        return view('page_admin.trang_cap_nhat_don_hang')
+            ->with('array_trang_thai', $array_trang_thai)
+            ->with('thong_tin_don_hang', $thong_tin_don_hang)
+            ->with('NoticeSuccess', 'Cập nhật đơn hàng thành công');
     }
 
     /**
@@ -105,5 +139,28 @@ class DonHangAdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function api_notice($email){
+        //echo $email;
+        $array_trang_thai = [
+            0 => 'Đã huỷ',
+            1 => 'Giao thành công',
+            2 => 'Đang chờ duyệt',
+            3 => 'Đã duyệt'
+        ];
+
+        $notice = DB::table('notice')
+        ->where('email', $email)
+        ->first();
+
+        if($notice){
+            DB::table('notice')->where('id', $notice->id)->delete();
+            $message = 'Trạng thái đơn hàng ' . $notice->id . ' của bạn được chuyển từ ' . $array_trang_thai[$notice->trang_thai_cu] . ' sang ' . $array_trang_thai[$notice->trang_thai_moi];
+            return response()->json(['status' => 'success', 'message' => $message]);
+        }
+        else {
+            return response()->json(['status' => 'success']);
+        }
     }
 }

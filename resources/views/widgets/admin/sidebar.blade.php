@@ -29,6 +29,13 @@
                 <ul class="sub">
                     <li><a class="" href="/admin/ql-don-hang">Danh sách đơn hàng</a></li>                          
                 </ul>
+            </li>  
+            <li class="sub-menu">
+                <a href="/admin/ql-chat-support" class="">
+                    <i class="icon_document_alt"></i>
+                    <span>Hỗ trợ chat</span>
+                    <span class="menu-arrow arrow_carrot-right"></span>
+                </a>
             </li>      
             <li class="sub-menu">
                 <a href="javascript:;" class="">

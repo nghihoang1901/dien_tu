@@ -2,6 +2,8 @@
 // let slideIndex = 1;
 // showSlides(slideIndex);
 
+// const { divide } = require("lodash");
+
 // function plusSlides(n) {
 //     showSlides(slideIndex += n);
 // }
@@ -42,6 +44,7 @@ $(() => {
                     tong_so_luong += gio_hang[i].so_luong;
                 }
                 // console.log(tong_so_luong);
+                $('.number_item_cart').removeClass('hidden');
                 $('.number_item_cart').html(tong_so_luong);
             })
             .fail((err) => {
@@ -49,3 +52,7 @@ $(() => {
             });
     });
 });
+
+
+
+    
